@@ -33,7 +33,6 @@ class AuthController extends Controller {
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'User successfully registered',
             'access_token' => $token,
             'token_type' => 'Bearer'
         ], 201);
@@ -66,9 +65,17 @@ class AuthController extends Controller {
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Successfully logged in',
             'access_token' => $token,
             'token_type' => 'Bearer'
+        ], 200);
+    }
+
+    function logout() {
+        /** @var User $user */
+        $user = Auth::user();
+        $user->tokens()->delete();
+        return response()->json([
+            'message' => 'Successfully logged out',
         ], 200);
     }
 }
