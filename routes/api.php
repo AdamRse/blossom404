@@ -19,7 +19,7 @@ Route::post('/plant/update', [PlantController::class, 'updateFromAPI']); // Rout
 
 // Routes pour la gestion des plantes des utilisateurs (authentification requise)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']); // Se déconnecter
     Route::post('/user/plant', [UserPlantController::class, 'store']); // Ajouter une plante à l'utilisateur
     Route::get('/user/plants', [UserPlantController::class, 'index']); // Récupérer toutes les plantes de l'utilisateur
     Route::delete('/user/plant/{id}', [UserPlantController::class, 'destroy']); // Supprimer une plante de l'utilisateur
