@@ -1,4 +1,5 @@
 <?php
+//app/Http/OpenApi/ApiInfo.php
 
 namespace App\Http\OpenApi;
 
@@ -8,7 +9,7 @@ namespace App\Http\OpenApi;
  *     title="Blossom Buddy API Documentation",
  *     description="API documentation for Blossom Buddy plant care application",
  *     @OA\Contact(
- *         email="contact@example.com"
+ *         email="contact@adam.adam"
  *     )
  * )
  *
