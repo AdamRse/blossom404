@@ -1,4 +1,5 @@
 <?php
+//app/Http/Controllers/PlantController.php
 
 namespace App\Http\Controllers;
 
