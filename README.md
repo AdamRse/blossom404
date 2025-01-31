@@ -1,18 +1,18 @@
 # Architecture SOLID
 app/
-├── Http/
-│   ├── Controllers/          # Contrôleurs légers, utilisent les services
-│   ├── Requests/            # Form requests pour la validation
-│   └── Resources/           # Resources pour la transformation des données
-├── Interfaces/             # Toutes les interfaces
-│   ├── Repositories/       # Interfaces des repositories
-│   └── Services/          # Interfaces des services
-├── Services/              # Implémentations des services
-│   ├── Plant/            # Services liés aux plantes
-│   └── Weather/          # Services liés à la météo
-├── Repositories/          # Implémentations des repositories
-│   ├── Plant/            # Repositories liés aux plantes
-│   └── Weather/          # Repositories liés à la météo
-├── Models/                # Modèles Eloquent
-├── DTOs/                  # Data Transfer Objects
-└── Providers/             # Service Providers pour les bindings
+├── Interfaces/                      # Contient toutes les interfaces (contrats)
+│   ├── Repositories/               # Interfaces pour l'accès aux données
+│   │   ├── Plant/                  # Repositories pour la gestion des plantes
+│   │   │   └── PlantRepositoryInterface.php    # Interface pour les opérations CRUD sur les plantes
+│   │   └── Weather/                # Repositories pour la gestion de la météo
+│   │       └── WeatherRepositoryInterface.php   # Interface pour l'accès aux données météo
+│   └── Services/                   # Interfaces pour la logique métier
+│       ├── Plant/                  # Services liés aux plantes
+│       │   └── PerenualApiServiceInterface.php  # Interface pour l'API Perenual
+│       └── Weather/                # Services liés à la météo
+│           └── WeatherServiceInterface.php      # Interface pour le service météo
+└── Services/                       # Implémentations des services
+   ├── Plant/                      # Services concrets pour les plantes
+   │   └── PerenualApiService.php             # Implémentation du service Perenual
+   └── Weather/                    # Services concrets pour la météo
+       └── WeatherService.php                  # Implémentation du service météo

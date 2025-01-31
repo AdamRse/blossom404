@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\PlantApiServiceInterface;
+use App\Interfaces\PerenualApiServiceInterface;
 use App\Models\Plant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 
 class PlantController extends Controller {
 
-    private PlantApiServiceInterface $plantApiService;
+    private PerenualApiServiceInterface $plantApiService;
 
-    public function __construct(PlantApiServiceInterface $plantApiService) {
+    public function __construct(PerenualApiServiceInterface $plantApiService) {
         $this->plantApiService = $plantApiService;
     }
 

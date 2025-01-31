@@ -3,7 +3,7 @@
 
 namespace App\Providers;
 
-use App\Interfaces\PlantApiServiceInterface;
+use App\Interfaces\PerenualApiServiceInterface;
 use App\Services\PerenualApiService;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider {
      * Register any application services.
      */
     public function register(): void {
-        $this->app->bind(PlantApiServiceInterface::class, PerenualApiService::class);
+        $this->app->bind(PerenualApiServiceInterface::class, PerenualApiService::class);
     }
 
     /**
