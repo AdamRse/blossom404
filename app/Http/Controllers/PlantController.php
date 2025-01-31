@@ -3,12 +3,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PlantApiServiceInterface;
 use App\Models\Plant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class PlantController extends Controller {
+
+    private PlantApiServiceInterface $plantApiService;
+
+    public function __construct(PlantApiServiceInterface $plantApiService) {
+        $this->plantApiService = $plantApiService;
+    }
+
     /**
      * Display a listing of all plants.
      */
@@ -72,13 +80,19 @@ class PlantController extends Controller {
 
     /**
      * Update plant database from external API.
-     * Note: This method will be implemented later when integrating with the external API.
      */
     public function updateFromAPI(): JsonResponse {
-        // Cette méthode sera implémentée plus tard lorsque nous intégrerons
-        // le service API externe Perenual
-        return response()->json([
-            'message' => 'Plant database update not yet implemented'
-        ]);
+        try {
+            $this->plantApiService->fetchAndStoreAllPlants();
+
+            return response()->json([
+                'message' => 'Plant database updated successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update plant database',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

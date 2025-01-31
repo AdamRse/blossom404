@@ -1,4 +1,5 @@
 <?php
+//database/migrations/99999_foreign_keys.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
