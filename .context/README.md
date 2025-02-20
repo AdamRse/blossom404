@@ -16,3 +16,9 @@ app/
    │   └── PerenualApiService.php             # Implémentation du service Perenual
    └── Weather/                    # Services concrets pour la météo
        └── WeatherService.php                  # Implémentation du service météo
+
+# Lancer le traitement des job en file d'attente
+```bash
+php artisan queue:work #En dev
+php artisan queue:work --daemon #En prod
+```

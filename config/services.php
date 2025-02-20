@@ -34,8 +34,12 @@ return [
         ],
     ],
 
+    //Les clés api
     'perenual' => [
         'key' => env('PERENUAL_API_KEY'),
+    ],
+    'weatherapi' => [
+        'key' => env('OPENWEATHER_API_KEY'),
     ],
 
 ];

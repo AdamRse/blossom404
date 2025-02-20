@@ -1,15 +1,24 @@
 <?php
+// File location in project : app/Http/Controllers/UserPlantController.php
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\Services\Watering\WateringServiceInterface;
 use App\Models\Plant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserPlantController extends Controller {
+    private WateringServiceInterface $wateringService;
+
+    public function __construct(WateringServiceInterface $wateringService) {
+        $this->wateringService = $wateringService;
+    }
+
     /**
      * Display a listing of the user's plants.
      */
@@ -24,6 +33,11 @@ class UserPlantController extends Controller {
                 'data' => $plants
             ], 200);
         } catch (\Exception $e) {
+            Log::error('Failed to retrieve plants', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id()
+            ]);
+
             return response()->json([
                 'error' => 'Failed to retrieve plants',
                 'message' => $e->getMessage()
@@ -73,16 +87,26 @@ class UserPlantController extends Controller {
             // Attacher la plante à l'utilisateur
             $user->plants()->attach($plant->id);
 
-            // TODO: Ici, nous devrons plus tard ajouter la logique pour:
-            // 1. Récupérer les données météo pour la ville
-            // 2. Calculer le prochain arrosage
-            // 3. Programmer la notification d'arrosage
+            // Calculer la prochaine date d'arrosage
+            $nextWateringDate = $this->wateringService->calculateNextWateringDate($plant, $request->city);
+
+            // Programmer la notification d'arrosage
+            $this->wateringService->scheduleWateringReminder($plant, $nextWateringDate);
 
             return response()->json([
                 'message' => 'Plant added to your collection successfully',
-                'data' => $plant
+                'data' => [
+                    'plant' => $plant,
+                    'next_watering' => $nextWateringDate->format('Y-m-d H:i:s')
+                ]
             ], 201);
         } catch (\Exception $e) {
+            Log::error('Failed to add plant', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id(),
+                'plant_name' => $request->plant_name
+            ]);
+
             return response()->json([
                 'error' => 'Failed to add plant',
                 'message' => $e->getMessage()
@@ -115,6 +139,12 @@ class UserPlantController extends Controller {
                 'message' => 'Plant removed from your collection successfully'
             ], 200);
         } catch (\Exception $e) {
+            Log::error('Failed to remove plant', [
+                'error' => $e->getMessage(),
+                'user_id' => Auth::id(),
+                'relationship_id' => $id
+            ]);
+
             return response()->json([
                 'error' => 'Failed to remove plant',
                 'message' => $e->getMessage()
