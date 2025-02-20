@@ -181,12 +181,54 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"plant_name\": \"Monstera\",\n    \"city\": \"Paris\"\n}"
+                            "raw": "{\n    \"plant_name\": \"Monstera\",\n    \"city\": \"Paris\",\n    \"watering_schedule\": {\n        \"frequency\": 3,\n        \"unit\": \"days\",\n        \"preferred_time\": \"08:00\"\n    },\n    \"personal_notes\": \"Near the living room window\"\n}"
                         },
                         "url": {
                             "raw": "{{site_url}}/user/plant",
                             "host": ["{{site_url}}"],
                             "path": ["user", "plant"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User Plant",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"watering_schedule\": {\n        \"frequency\": 4,\n        \"unit\": \"days\",\n        \"preferred_time\": \"10:00\"\n    },\n    \"personal_notes\": \"Moved to the kitchen window\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{site_url}}/user/plant/1",
+                            "host": ["{{site_url}}"],
+                            "path": ["user", "plant", "1"]
+                        }
+                    }
+                },
+                {
+                    "name": "Record Plant Watering",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{site_url}}/user/plant/1/water",
+                            "host": ["{{site_url}}"],
+                            "path": ["user", "plant", "1", "water"]
                         }
                     }
                 },

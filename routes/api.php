@@ -23,4 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/plant', [UserPlantController::class, 'store']); // Ajouter une plante à l'utilisateur
     Route::get('/user/plants', [UserPlantController::class, 'index']); // Récupérer toutes les plantes de l'utilisateur
     Route::delete('/user/plant/{id}', [UserPlantController::class, 'destroy']); // Supprimer une plante de l'utilisateur
+    Route::put('/user/plant/{id}', [UserPlantController::class, 'update']); // Mettre à jour les informations
+    Route::post('/user/plant/{id}/water', [UserPlantController::class, 'recordWatering']); // Enregistrer un arrosage
 });

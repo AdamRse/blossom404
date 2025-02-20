@@ -38,6 +38,7 @@ class Plant extends Model {
 
     public function users(): BelongsToMany {
         return $this->belongsToMany(User::class, 'user_plant')
+            ->withPivot(['last_watered_at', 'watering_schedule', 'personal_notes'])
             ->withTimestamps();
     }
 }
