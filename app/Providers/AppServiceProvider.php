@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\PerenualApiServiceInterface;
-use App\Services\PerenualApiService;
+use App\Interfaces\Services\Plant\PerenualApiServiceInterface;
+use App\Services\Plant\PerenualApiService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Plant;
 
-use App\Interfaces\PerenualApiServiceInterface;
+use App\Interfaces\Services\Plant\PerenualApiServiceInterface;
 use App\Interfaces\Repositories\PlantRepositoryInterface;
 use App\Models\Plant;
 use Illuminate\Support\Facades\Http;
