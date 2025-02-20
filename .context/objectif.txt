@@ -1,0 +1,6 @@
+Je travaille sur un TP à réaliser sur Laravel, j'aimerais que tu m'aides pour certaines étapes.
+Tu as les instructions du TP en fichier de contexte. Le but est d'apprendre les bonne pratiques pour coder une API laravel avec les principes SOLID, ainsi que les design patterns.
+
+J'aimerais que quand tu modifies un fichier de migration, tu le réécrive entièrement, et tu ajoute les clés étrangères dans database/migrations/99999_foreign_keys.php, que tu mets aussi à jour.
+Je ne veux pas de migration "create after", l'objectif étant que la migration reste de la forme, une table = 1 fichier.
+Toutes les clés étrangères sont déclarées à la fin du dans le fichier database/migrations/99999_foreign_keys.php pour ne pas géner la création de tables inter-dépendantes.
