@@ -1,5 +1,4 @@
 <?php
-// File location in project : app/Http/OpenApi/Schemas/UserPlantSchemas.php
 
 namespace App\Http\OpenApi\Schemas;
 
