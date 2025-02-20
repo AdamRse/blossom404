@@ -1,5 +1,4 @@
 <?php
-//app/Interfaces/Services/Plant/PerenualApiServiceInterface.php
 
 namespace App\Interfaces;
 

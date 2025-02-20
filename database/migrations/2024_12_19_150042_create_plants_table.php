@@ -1,5 +1,4 @@
 <?php
-//database/migrations/2024_12_19_150042_create_plants_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

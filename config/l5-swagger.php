@@ -1,6 +1,4 @@
 <?php
-//config/l5-swagger.php
-
 return [
     'default' => 'default',
     'documentations' => [

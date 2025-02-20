@@ -1,5 +1,4 @@
 <?php
-// app/Interfaces/Repositories/Plant/PlantRepositoryInterface.php
 
 namespace App\Interfaces\Repositories;
 

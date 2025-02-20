@@ -1,5 +1,4 @@
 <?php
-//app/Http/Controllers/UserPlantController.php
 
 namespace App\Http\Controllers;
 

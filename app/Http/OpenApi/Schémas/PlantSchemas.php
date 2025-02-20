@@ -1,5 +1,4 @@
 <?php
-//app/Http/OpenApi/Schemas/PlantSchemas.php
 
 namespace App\Http\OpenApi\Schemas;
 

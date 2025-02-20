@@ -1,5 +1,4 @@
 <?php
-//app/Http/OpenApi/ApiInfo.php
 
 namespace App\Http\OpenApi;
 

@@ -1,5 +1,4 @@
 <?php
-// app/Repositories/Plant/PlantRepository.php
 
 namespace App\Repositories\Plant;
 

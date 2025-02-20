@@ -1,6 +1,4 @@
 <?php
-//config/services.php
-
 return [
 
     /*
