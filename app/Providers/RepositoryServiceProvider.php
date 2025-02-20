@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Interfaces\Repositories\PlantRepositoryInterface;
+use App\Interfaces\Repositories\Plant\PlantRepositoryInterface;
+use App\Repositories\Plant\PlantRepository;
 use App\Interfaces\Services\Weather\WeatherServiceInterface;
 use App\Interfaces\Services\Watering\WateringServiceInterface;
-use App\Repositories\Plant\PlantRepository;
 use App\Services\Weather\WeatherService;
 use App\Services\Watering\WateringService;
 use Illuminate\Support\ServiceProvider;

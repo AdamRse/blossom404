@@ -1,8 +1,9 @@
 <?php
+//app/Http/Controllers/PlantController.php
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\PerenualApiServiceInterface;
+use App\Interfaces\Services\Plant\PerenualApiServiceInterface;
 use App\Models\Plant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

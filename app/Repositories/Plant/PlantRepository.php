@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Plant;
 
-use App\Interfaces\Repositories\PlantRepositoryInterface;
+use App\Interfaces\Repositories\Plant\PlantRepositoryInterface;
 use App\Models\Plant;
 use Illuminate\Database\Eloquent\Collection;
 

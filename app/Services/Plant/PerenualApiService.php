@@ -3,7 +3,7 @@
 namespace App\Services\Plant;
 
 use App\Interfaces\Services\Plant\PerenualApiServiceInterface;
-use App\Interfaces\Repositories\PlantRepositoryInterface;
+use App\Interfaces\Repositories\Plant\PlantRepositoryInterface;
 use App\Models\Plant;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
