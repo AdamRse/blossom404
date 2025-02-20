@@ -1,17 +1,17 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Blossom Buddy API Documentation",
-        "description": "API documentation for Blossom Buddy plant care application",
+        "title": "Blossom Buddy API",
+        "description": "API documentation for Blossom Buddy application",
         "contact": {
-            "email": "contact@adam.adam"
+            "email": "contact@example.com"
         },
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://localhost:8000/api",
-            "description": "Local API Server"
+            "description": "Local API server"
         }
     ],
     "paths": {
@@ -204,9 +204,665 @@
                     }
                 ]
             }
+        },
+        "/user/plants": {
+            "get": {
+                "tags": [
+                    "User Plants"
+                ],
+                "summary": "Get user's plant collection",
+                "operationId": "0eb9a070f9e58bc55f14fa36d1fa5031",
+                "responses": {
+                    "200": {
+                        "description": "List of user's plants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Plants retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserPlant"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/plant": {
+            "post": {
+                "tags": [
+                    "User Plants"
+                ],
+                "summary": "Add a plant to user's collection",
+                "operationId": "b4273403948f66e51d9e0bbc5532127b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "plant_name",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "plant_name": {
+                                        "type": "string",
+                                        "example": "Monstera"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Paris"
+                                    },
+                                    "watering_schedule": {
+                                        "type": "object",
+                                        "example": {
+                                            "frequency": 3,
+                                            "unit": "days",
+                                            "preferred_time": "08:00"
+                                        }
+                                    },
+                                    "personal_notes": {
+                                        "type": "string",
+                                        "example": "Near the living room window"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Plant added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserPlantResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Plant not found"
+                    },
+                    "409": {
+                        "description": "Plant already in collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/plant/{id}": {
+            "put": {
+                "tags": [
+                    "User Plants"
+                ],
+                "summary": "Update plant information in user's collection",
+                "operationId": "d1526a90d2106e98196a5a8ae1045ccf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User plant pivot ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "watering_schedule": {
+                                        "type": "object",
+                                        "example": {
+                                            "frequency": 3,
+                                            "unit": "days",
+                                            "preferred_time": "08:00"
+                                        }
+                                    },
+                                    "personal_notes": {
+                                        "type": "string",
+                                        "example": "Updated location: kitchen"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plant information updated successfully"
+                    },
+                    "404": {
+                        "description": "Plant not found in user's collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "User Plants"
+                ],
+                "summary": "Remove a plant from user's collection",
+                "operationId": "b8bc9546b7a4d8703ee245e3fd461fe7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User plant pivot ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plant removed successfully"
+                    },
+                    "404": {
+                        "description": "Plant not found in user's collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/plant/{id}/water": {
+            "post": {
+                "tags": [
+                    "User Plants"
+                ],
+                "summary": "Record a watering event for a plant",
+                "operationId": "cf6bf9e871c2d4fe345a369338bacb06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User plant pivot ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Watering recorded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Watering recorded successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "last_watered_at": {
+                                                    "type": "string",
+                                                    "format": "datetime"
+                                                },
+                                                "next_watering": {
+                                                    "type": "string",
+                                                    "format": "datetime"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Plant not found in user's collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/plant/update": {
+            "post": {
+                "tags": [
+                    "Plants"
+                ],
+                "summary": "Update local plant database from external API",
+                "description": "Fetch all plants from the API and store them in the database",
+                "operationId": "941dc7aaf68bcf952e5f30a70305f7a2",
+                "responses": {
+                    "200": {
+                        "description": "Plants fetched and stored successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Plant database updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error occurred while fetching plants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plant/{name}": {
+            "get": {
+                "tags": [
+                    "Plants"
+                ],
+                "summary": "Get plant information by name",
+                "description": "Fetch a specific plant by its name",
+                "operationId": "e5e61fe8a8dcf4a6524da6ae236c9dd8",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Common name of the plant",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plant found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plant"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Plant not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Plant not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plant/details/{perenualId}": {
+            "get": {
+                "tags": [
+                    "Plants"
+                ],
+                "summary": "Get detailed plant information by Perenual ID",
+                "description": "Fetch detailed information about a specific plant by its Perenual ID",
+                "operationId": "4a8575a30410842938965710f97eddd7",
+                "parameters": [
+                    {
+                        "name": "perenualId",
+                        "in": "path",
+                        "description": "Perenual ID of the plant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plant details found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plant"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Plant details not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Plant details not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plant/{perenualId}/care-guides": {
+            "get": {
+                "tags": [
+                    "Plants"
+                ],
+                "summary": "Get plant care guides",
+                "description": "Fetch care guides for a specific plant",
+                "operationId": "6767bc3cb6b3c94bb4b11db3f5dc3c3b",
+                "parameters": [
+                    {
+                        "name": "perenualId",
+                        "in": "path",
+                        "description": "Perenual ID of the plant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Care guides found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CareGuide"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Care guides not found"
+                    }
+                }
+            }
+        },
+        "/plant/diseases": {
+            "get": {
+                "tags": [
+                    "Plants"
+                ],
+                "summary": "Get list of plant diseases",
+                "description": "Fetch list of common plant diseases",
+                "operationId": "de99fe8400933329f6f469cfe8d5ec7c",
+                "responses": {
+                    "200": {
+                        "description": "List of plant diseases",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PlantDisease"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error fetching plant diseases"
+                    }
+                }
+            }
         }
     },
     "components": {
+        "schemas": {
+            "Plant": {
+                "title": "Plant",
+                "description": "Plant model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "perenual_id": {
+                        "type": "integer"
+                    },
+                    "common_name": {
+                        "type": "string"
+                    },
+                    "scientific_name": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "sunlight": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "watering": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "watering_general_benchmark": {
+                        "properties": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "unit": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CareGuide": {
+                "title": "Care Guide",
+                "description": "Plant care guide",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PlantDisease": {
+                "title": "Plant Disease",
+                "description": "Plant disease information",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPlant": {
+                "description": "User's plant with additional information",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "pivot": {
+                        "$ref": "#/components/schemas/UserPlantPivot"
+                    },
+                    "plant": {
+                        "$ref": "#/components/schemas/Plant"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPlantPivot": {
+                "description": "Pivot information for user's plant",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "plant_id": {
+                        "type": "integer"
+                    },
+                    "last_watered_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "nullable": true
+                    },
+                    "watering_schedule": {
+                        "properties": {
+                            "frequency": {
+                                "type": "integer",
+                                "example": 3
+                            },
+                            "unit": {
+                                "type": "string",
+                                "example": "days"
+                            },
+                            "preferred_time": {
+                                "type": "string",
+                                "example": "08:00"
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    },
+                    "personal_notes": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPlantResponse": {
+                "description": "Response when adding a plant to user's collection",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Plant added to your collection successfully"
+                    },
+                    "data": {
+                        "properties": {
+                            "plant": {
+                                "$ref": "#/components/schemas/Plant"
+                            },
+                            "next_watering": {
+                                "type": "string",
+                                "format": "datetime"
+                            },
+                            "watering_schedule": {
+                                "properties": {
+                                    "frequency": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "unit": {
+                                        "type": "string",
+                                        "example": "days"
+                                    },
+                                    "preferred_time": {
+                                        "type": "string",
+                                        "example": "08:00"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "personal_notes": {
+                                "type": "string",
+                                "example": "Near the living room window"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PlantApiService": {
+                "description": "Interface for interacting with external plant APIs"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
@@ -223,6 +879,14 @@
         {
             "name": "Authentication",
             "description": "API Endpoints for user authentication"
+        },
+        {
+            "name": "User Plants",
+            "description": "API Endpoints for managing user's plant collection"
+        },
+        {
+            "name": "Plants",
+            "description": "Plants"
         }
     ],
     "security": [

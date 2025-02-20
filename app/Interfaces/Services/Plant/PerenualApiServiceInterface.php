@@ -82,7 +82,7 @@ interface PerenualApiServiceInterface {
      *     @OA\Response(
      *         response=200,
      *         description="Plant details found",
-     *         @OA\JsonContent(ref="#/components/schemas/PlantDetail")
+     *         @OA\JsonContent(ref="#/components/schemas/Plant")
      *     ),
      *     @OA\Response(
      *         response=404,
