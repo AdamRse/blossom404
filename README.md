@@ -1,4 +1,4 @@
-# Architecture SOLID
+# Architecture
 app/
 ├── Http/
 │   ├── Controllers/                    # Contrôleurs de l'application
