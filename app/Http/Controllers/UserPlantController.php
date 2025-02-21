@@ -147,6 +147,7 @@ class UserPlantController extends Controller {
 
             // Préparer les données pivot
             $pivotData = [
+                'city' => $request->city,
                 'watering_schedule' => $request->watering_schedule,
                 'personal_notes' => $request->personal_notes
             ];
@@ -164,6 +165,7 @@ class UserPlantController extends Controller {
                 'message' => 'Plant added to your collection successfully',
                 'data' => [
                     'plant' => $plant,
+                    'city' => $request->city,
                     'next_watering' => $nextWateringDate->format('Y-m-d H:i:s'),
                     'watering_schedule' => $request->watering_schedule,
                     'personal_notes' => $request->personal_notes
@@ -306,7 +308,10 @@ class UserPlantController extends Controller {
         try {
             /** @var User $user */
             $user = Auth::user();
-            $userPlant = $user->plants()->wherePivot('id', $id)->first();
+            $userPlant = $user->plants()
+                ->wherePivot('id', $id)
+                ->withPivot(['city'])
+                ->first();
 
             if (!$userPlant) {
                 return response()->json([
@@ -315,20 +320,21 @@ class UserPlantController extends Controller {
                 ], 404);
             }
 
+            $now = Carbon::now();
             $user->plants()->updateExistingPivot($userPlant->id, [
-                'last_watered_at' => Carbon::now()
+                'last_watered_at' => $now
             ]);
 
             // Calculer la prochaine date d'arrosage basée sur le planning personnalisé ou le planning par défaut
             $nextWateringDate = $this->wateringService->calculateNextWateringDate(
                 $userPlant,
-                $user->city ?? 'Paris' // Vous devriez stocker la ville de l'utilisateur quelque part
+                $userPlant->pivot->city ?? 'Paris' // Utilise la ville stockée dans la pivot ou Paris par défaut
             );
 
             return response()->json([
                 'message' => 'Watering recorded successfully',
                 'data' => [
-                    'last_watered_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'last_watered_at' => $now->format('Y-m-d H:i:s'),
                     'next_watering' => $nextWateringDate->format('Y-m-d H:i:s')
                 ]
             ], 200);
